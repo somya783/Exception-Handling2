@@ -1,0 +1,60 @@
+using System;
+
+namespace Q6_StudentMarksEntry
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] marks = new int[5];
+            int subjectsEntered = 0;
+
+            Console.WriteLine("Enter marks for 5 subjects (0-100 each):");
+
+            while (subjectsEntered < 5)
+            {
+                try
+                {
+                    Console.Write($"Subject {subjectsEntered + 1}: ");
+                    string input = Console.ReadLine();
+                    int mark = Convert.ToInt32(input);
+
+                    if (mark < 0 || mark > 100)
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(mark), "Marks must be between 0 and 100.");
+                    }
+
+                    marks[subjectsEntered] = mark;
+                    subjectsEntered++;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid input: Please enter a numeric value.");
+                }
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    Console.WriteLine("Invalid input: " + ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("An unexpected error occurred: " + ex.Message);
+                }
+            }
+
+            int total = 0;
+            foreach (int m in marks)
+            {
+                total += m;
+            }
+            double average = total / (double)marks.Length;
+
+            Console.WriteLine("\nAll marks entered successfully!");
+            Console.WriteLine("Marks: " + string.Join(", ", marks));
+            Console.WriteLine($"Total: {total}");
+            Console.WriteLine($"Average: {average:F2}");
+
+            Console.WriteLine("Press Enter to exit...");
+            Console.ReadLine();
+        }
+    }
+}
