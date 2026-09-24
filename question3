@@ -1,0 +1,37 @@
+using System;
+
+namespace Q3_ArrayIndexOutOfRange
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] numbers = { 10, 20, 30, 40, 50 };
+
+            try
+            {
+                Console.WriteLine("Array elements: " + string.Join(", ", numbers));
+                Console.Write("Enter an index (0-4) to access: ");
+                int index = Convert.ToInt32(Console.ReadLine());
+
+                int value = numbers[index];
+                Console.WriteLine($"Element at index {index} is {value}");
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Console.WriteLine("Error: The index you entered is out of range. Valid range is 0 to 4.");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error: Please enter a valid integer index.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An unexpected error occurred: " + ex.Message);
+            }
+
+            Console.WriteLine("Press Enter to exit...");
+            Console.ReadLine();
+        }
+    }
+}
