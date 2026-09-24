@@ -1,0 +1,50 @@
+using System;
+
+namespace Q4_MultipleCatchBlocks
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                Console.Write("Enter the first number: ");
+                int num1 = Convert.ToInt32(Console.ReadLine());
+
+                Console.Write("Enter the second number: ");
+                int num2 = Convert.ToInt32(Console.ReadLine());
+
+                int result = num1 / num2;
+                Console.WriteLine($"Result of division: {result}");
+
+                int[] arr = new int[3];
+                Console.Write("Enter an array index to test (0-2): ");
+                int idx = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine($"Array value: {arr[idx]}");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException: Please enter numeric values only.");
+            }
+            catch (DivideByZeroException)
+            {
+                Console.WriteLine("DivideByZeroException: The second number cannot be zero.");
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Console.WriteLine("IndexOutOfRangeException: The array index entered is invalid.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("General Exception: " + ex.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Execution of the try-catch block is complete.");
+            }
+
+            Console.WriteLine("Press Enter to exit...");
+            Console.ReadLine();
+        }
+    }
+}
