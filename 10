@@ -1,0 +1,80 @@
+using System;
+using System.IO;
+using System.Linq;
+
+namespace Q10_FileReadStudentMarks
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string filePath = "marks.txt";
+
+            try
+            {
+                // Create a sample marks file if it doesn't already exist, so the
+                // program can be demonstrated without needing a pre-existing file.
+                if (!File.Exists(filePath))
+                {
+                    Console.WriteLine($"'{filePath}' not found. Creating a sample file for demonstration...");
+                    File.WriteAllLines(filePath, new[] { "78", "92", "65", "88", "74" });
+                }
+
+                string[] lines = File.ReadAllLines(filePath);
+
+                if (lines.Length == 0)
+                {
+                    throw new Exception("The marks file is empty.");
+                }
+
+                int total = 0;
+                int highest = int.MinValue;
+                int lowest = int.MaxValue;
+                int validCount = 0;
+
+                foreach (string line in lines)
+                {
+                    if (int.TryParse(line.Trim(), out int mark))
+                    {
+                        total += mark;
+                        validCount++;
+                        if (mark > highest) highest = mark;
+                        if (mark < lowest) lowest = mark;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Skipping invalid entry in file: '{line}'");
+                    }
+                }
+
+                if (validCount == 0)
+                {
+                    throw new Exception("No valid numeric marks were found in the file.");
+                }
+
+                double average = total / (double)validCount;
+
+                Console.WriteLine("\n--- Marks Summary ---");
+                Console.WriteLine($"Total Marks : {total}");
+                Console.WriteLine($"Average     : {average:F2}");
+                Console.WriteLine($"Highest     : {highest}");
+                Console.WriteLine($"Lowest      : {lowest}");
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine("Error: The marks file could not be found. " + ex.Message);
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine("File error: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An unexpected error occurred: " + ex.Message);
+            }
+
+            Console.WriteLine("\nPress Enter to exit...");
+            Console.ReadLine();
+        }
+    }
+}
