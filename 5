@@ -1,0 +1,52 @@
+using System;
+
+namespace Q5_ATMWithdrawal
+{
+    // Custom exception for insufficient balance
+    internal class InsufficientFundsException : Exception
+    {
+        public InsufficientFundsException(string message) : base(message) { }
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                Console.Write("Enter your account balance: ");
+                double balance = Convert.ToDouble(Console.ReadLine());
+
+                Console.Write("Enter the amount to withdraw: ");
+                double withdrawAmount = Convert.ToDouble(Console.ReadLine());
+
+                if (withdrawAmount > balance)
+                {
+                    throw new InsufficientFundsException("Insufficient balance to complete this withdrawal.");
+                }
+
+                balance -= withdrawAmount;
+                Console.WriteLine($"Withdrawal successful! Remaining balance: {balance}");
+            }
+            catch (InsufficientFundsException ex)
+            {
+                Console.WriteLine("Transaction failed: " + ex.Message);
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error: Please enter valid numeric amounts.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An unexpected error occurred: " + ex.Message);
+            }
+            finally
+            {
+                Console.WriteLine("ATM transaction process finished. Thank you for using our service.");
+            }
+
+            Console.WriteLine("Press Enter to exit...");
+            Console.ReadLine();
+        }
+    }
+}
