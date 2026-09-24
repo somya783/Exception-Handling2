@@ -1,0 +1,34 @@
+using System;
+
+namespace Q2_FormatExceptionHandling
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                Console.Write("Enter an integer value: ");
+                string input = Console.ReadLine();
+
+                int number = Convert.ToInt32(input);
+                Console.WriteLine($"You entered a valid integer: {number}");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error: The value you entered is not a valid integer (non-numeric input).");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Error: The value entered is too large or too small for an integer.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An unexpected error occurred: " + ex.Message);
+            }
+
+            Console.WriteLine("Press Enter to exit...");
+            Console.ReadLine();
+        }
+    }
+}
