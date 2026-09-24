@@ -1,0 +1,62 @@
+using System;
+using System.IO;
+
+namespace Q9_FileWriteReadStudent
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string filePath = "students.txt";
+
+            try
+            {
+                // Writing student details to a text file
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    Console.Write("Enter number of students: ");
+                    int count = Convert.ToInt32(Console.ReadLine());
+
+                    for (int i = 1; i <= count; i++)
+                    {
+                        Console.Write($"Enter name of student {i}: ");
+                        string name = Console.ReadLine();
+
+                        Console.Write($"Enter roll number of student {i}: ");
+                        string rollNo = Console.ReadLine();
+
+                        writer.WriteLine($"Name: {name}, Roll No: {rollNo}");
+                    }
+                }
+
+                Console.WriteLine("\nStudent details have been written to " + filePath);
+
+                // Reading and displaying the contents of the file
+                Console.WriteLine("\nReading student details from the file:\n");
+                using (StreamReader reader = new StreamReader(filePath))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        Console.WriteLine(line);
+                    }
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error: Please enter a valid number for the student count.");
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine("File error: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An unexpected error occurred: " + ex.Message);
+            }
+
+            Console.WriteLine("\nPress Enter to exit...");
+            Console.ReadLine();
+        }
+    }
+}
