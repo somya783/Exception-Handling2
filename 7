@@ -1,0 +1,52 @@
+using System;
+
+namespace Q7_LoginSystem
+{
+    // Custom exception thrown for invalid login credentials
+    internal class InvalidLoginException : Exception
+    {
+        public InvalidLoginException(string message) : base(message) { }
+    }
+
+    internal class Program
+    {
+        // Predefined valid credentials for demonstration purposes
+        private const string ValidUsername = "admin";
+        private const string ValidPassword = "password123";
+
+        static void Main(string[] args)
+        {
+            try
+            {
+                Console.Write("Enter username: ");
+                string username = Console.ReadLine();
+
+                Console.Write("Enter password: ");
+                string password = Console.ReadLine();
+
+                ValidateLogin(username, password);
+
+                Console.WriteLine("Login successful! Welcome, " + username + ".");
+            }
+            catch (InvalidLoginException ex)
+            {
+                Console.WriteLine("Login failed: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An unexpected error occurred: " + ex.Message);
+            }
+
+            Console.WriteLine("Press Enter to exit...");
+            Console.ReadLine();
+        }
+
+        static void ValidateLogin(string username, string password)
+        {
+            if (username != ValidUsername || password != ValidPassword)
+            {
+                throw new InvalidLoginException("Incorrect username or password.");
+            }
+        }
+    }
+}
